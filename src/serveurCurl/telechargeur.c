@@ -34,20 +34,30 @@ void executerRequete(int pipeFd, char* reqBuffer){
     //
     // Modifie pour fonctionner avec l'architecture du TP2
 
-    // On cree l'URL
+    int offsetFichier = 0;
     struct msgReq req;
-    char index[] = "index.txt";
+    const char index[] = "index.txt";       // Nom par defaut du fichier listant le contenu du repertoire
+    
+    // On cree l'URL
     memcpy(&req, reqBuffer, sizeof(req));
     size_t allocsize = (req.type == REQ_LIST) ? (sizeof(index) + sizeof(baseUrl)) : (req.sizePayload + sizeof(baseUrl));
+    if(req.type == REQ_READ && strchr((char *)(reqBuffer + sizeof(req)), '/')){
+        // Si on recoit une requete avec "/" au debut du nom (ex. "/fichier.cpp"),
+        // on ne veut pas repeter le / qui est deja present dans baseUrl.
+        // Donc on alloue 1 caractere de moins, et on memorise dans offsetFichier
+        // le fait qu'il faut partir du _2e_ caractere et non du premier.
+        allocsize -= 1;
+        offsetFichier = 1;
+    }
     char* fname = malloc(allocsize);
 
     if(req.type == REQ_LIST){
-        strncpy(fname, baseUrl, sizeof(baseUrl));
-        strncat(fname, index, sizeof(index));
+        strncpy(fname, baseUrl, allocsize);
+        strncat(fname, index, allocsize);
     }
     else if(req.type == REQ_READ){
-        strncpy(fname, baseUrl, sizeof(baseUrl));
-        strncat(fname, reqBuffer + sizeof(req), req.sizePayload);
+        strncpy(fname, baseUrl, allocsize);
+        strncat(fname, reqBuffer + sizeof(req) + offsetFichier, allocsize);
     }
     else{
         printf("Requete invalide!\n");
