@@ -35,7 +35,7 @@
 const char* statusDesc[] = {"Inoccupe", "Connexion client etablie", "En cours de telechargement", "Pret a envoyer"};
 
 // Nombre maximal de connexions simultanés
-#define MAX_CONNEXIONS 10
+#define MAX_CONNEXIONS 5
 // Contient les requetes en cours de traitement
 struct requete reqList[MAX_CONNEXIONS];
 
