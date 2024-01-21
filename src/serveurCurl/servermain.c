@@ -1,4 +1,7 @@
-/* TP2 2023 */
+/* TP2 Hiver 2024 
+ * Code source fourni
+ * Marc-Andre Gardner
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -52,7 +55,7 @@ void gererSignal(int signo) {
 int main(int argc, char* argv[]){
     // Chemin du socket UNIX
     // Linux ne supporte pas un chemin de plus de 108 octets (voir man 7 unix)
-    char path[108] = "/tmp/unixsocket";
+    char path[108] = "/tmp/setrunixsocket";
     if(argc > 1)        // On peut également le passer en paramètre
         strncpy(path, argv[1], sizeof(path));
     unlink(path);       // Au cas ou le fichier liant le socket UNIX existerait deja

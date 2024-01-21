@@ -1,3 +1,8 @@
+/* TP2 Hiver 2024 
+ * Code source fourni
+ * Marc-Andre Gardner
+ */
+
 #ifndef COMM_H
 #define COMM_H
 
@@ -11,8 +16,8 @@
 #define VERBOSE 1
 
 // Les deux types de requêtes que l'on peut recevoir
-#define REQ_LIST 1          // Retourner le contenu du fichier index.txt
-#define REQ_READ 2          // Retourner le contenu du fichier passé dans la suite de la requête
+#define REQ_LIST 0x10          // Retourner le contenu du fichier index.txt
+#define REQ_READ 0x20          // Retourner le contenu du fichier passé dans la suite de la requête
 
 // Définit l'en-tête d'une requête
 struct msgReq{
@@ -22,11 +27,11 @@ struct msgReq{
 
 
 // Les différents status que le serveur peut retourner comme réponse à une requête
-#define STATUS_OK 0                     // Requête exécutée avec le succès, le contenu du fichier suit
-#define STATUS_REQ_INVALIDE 1           // La requête est invalide (par exemple parce qu'aucun nom de fichier n'est donné)
-#define STATUS_TYPE_REQ_INCONNU 2       // Le type de requête est inconnu
-#define STATUS_ERREUR_TELECHARGEMENT 3  // Le fichier n'existe pas sur le serveur
-                                        // De manière générale, c'est cette dernière erreur que vous rencontrerez le plus souvent
+#define STATUS_OK 0x00                     // Requête exécutée avec le succès, le contenu du fichier suit
+#define STATUS_REQ_INVALIDE 0x10           // La requête est invalide (par exemple parce qu'aucun nom de fichier n'est donné)
+#define STATUS_TYPE_REQ_INCONNU 0x20       // Le type de requête est inconnu
+#define STATUS_ERREUR_TELECHARGEMENT 0x30  // Le fichier n'existe pas sur le serveur
+                                           // De manière générale, c'est cette dernière erreur que vous rencontrerez le plus souvent
 // Définit l'en-tête d'une réponse
 struct msgRep{
     char status;        // statut de la requête (voir plus haut)

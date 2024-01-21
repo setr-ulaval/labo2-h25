@@ -1,3 +1,8 @@
+/* TP2 Hiver 2024 
+ * Code source fourni
+ * Marc-Andre Gardner
+ */
+
 #include "communications.h"
 
 int envoyerMessage(int socket, void *header, char* payload){

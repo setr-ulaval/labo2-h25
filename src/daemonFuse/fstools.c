@@ -1,6 +1,11 @@
+/* TP2 Hiver 2024 
+ * Code source fourni
+ * Marc-Andre Gardner
+ */
+
 #include "fstools.h"
 
-struct cacheFichier* incrementerCompteurFichier(const char *path, struct cacheData *cache, int increment){
+struct cacheFichier* incrementerCompteurFichier(struct cacheData *cache, const char *path, int increment){
 	struct cacheFichier *fichier = cache->firstFile;
 
 	while(fichier != NULL){
@@ -13,11 +18,11 @@ struct cacheFichier* incrementerCompteurFichier(const char *path, struct cacheDa
 	return fichier;
 }
 
-struct cacheFichier* trouverFichier(const char *path, struct cacheData *cache){
-	return incrementerCompteurFichier(path, cache, 0);
+struct cacheFichier* trouverFichier(struct cacheData *cache, const char *path){
+	return incrementerCompteurFichier(cache, path, 0);
 }
 
-void insererFichier(struct cacheFichier *infoFichier, struct cacheData *cache){
+void insererFichier(struct cacheData *cache, struct cacheFichier *infoFichier){
     if(cache->firstFile == NULL){
         infoFichier->next = NULL;
 	infoFichier->prev = NULL;
@@ -29,7 +34,7 @@ void insererFichier(struct cacheFichier *infoFichier, struct cacheData *cache){
     cache->firstFile = infoFichier;
 }
 
-void retirerFichier(struct cacheFichier *infoFichier, struct cacheData *cache){
+void retirerFichier(struct cacheData *cache, struct cacheFichier *infoFichier){
     free(infoFichier->nom);
     free(infoFichier->data);
     if(cache->firstFile == infoFichier)

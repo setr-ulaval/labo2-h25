@@ -1,3 +1,8 @@
+/* TP2 Hiver 2024 
+ * Code source fourni
+ * Marc-Andre Gardner
+ */
+
 #include "requete.h"
 
 int nouvelleRequete(struct requete reqList[], int lenreq){

@@ -1,3 +1,8 @@
+/* TP2 Hiver 2024 
+ * Code source fourni
+ * Marc-Andre Gardner
+ */
+
 #ifndef REQUETE_H
 #define REQUETE_H
 
@@ -15,9 +20,9 @@
 // Structure contenant les informations sur une requête
 struct requete{
         int status;         // Status de cette requête (voir les #define plus haut)
+        pid_t pid;          // Si un processus enfant est lancé pour cette requête, ID de ce processus
+        int fdPipe;         // Si un processus enfant est lancé pour cette requête, descripteur de fichier du bout de lecture du pipe
         int fdSocket;       // Si un client s'est connecté, descripteur de fichier du socket
-        int fdPipe;         // Si un processus enfant est lancé, descripteur de fichier du bout de lecture du pipe
-        pid_t pid;          // Si un processus enfant est lancé, ID de ce processus
         char* buf;          // Si les données sont prêtes, pointe vers le buffer contenant ces données
         size_t len;         // Si les données sont prêtes, contient la longueur des données (en octets)
 };

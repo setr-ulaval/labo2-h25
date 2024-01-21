@@ -1,3 +1,8 @@
+/* TP2 Hiver 2024 
+ * Code source fourni
+ * Marc-Andre Gardner
+ */
+
 #ifndef TELECHARGEUR_H
 #define TELECHARGEUR_H
 

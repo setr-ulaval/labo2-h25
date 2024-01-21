@@ -1,7 +1,12 @@
+/* TP2 Hiver 2024 
+ * Code source fourni
+ * Marc-Andre Gardner
+ */
+
 #include "telechargeur.h"
 
 // Adresse du serveur
-const char baseUrl[] = "http://wcours.gel.ulaval.ca/2020/h/GIF3004/default/labo2/";
+const char baseUrl[] = "http://wcours.gel.ulaval.ca/GIF3004/labo2/";
 
 
 // Fonction utilisée à l'interne, vous n'avez pas à l'utiliser directement
@@ -49,7 +54,8 @@ void executerRequete(int pipeFd, char* reqBuffer){
         allocsize -= 1;
         offsetFichier = 1;
     }
-    char* fname = malloc(allocsize);
+    // On ajoute 1 pour tenir compte du null character terminant la chaine de caracteres
+    char* fname = malloc(allocsize + 1);
 
     if(req.type == REQ_LIST){
         strncpy(fname, baseUrl, allocsize);

@@ -1,3 +1,8 @@
+/* TP2 Hiver 2024 
+ * Code source fourni
+ * Marc-Andre Gardner
+ */
+
 #include "actions.h"
 
 int verifierNouvelleConnexion(struct requete reqList[], int maxlen, int socket){

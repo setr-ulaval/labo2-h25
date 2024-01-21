@@ -1,4 +1,4 @@
-/* TP2 2023 */
+/* TP2 2024 */
 /*
  * Squelette d'implementation du système de fichier setrFS
  * Adapté de l'exemple "passthrough" de libfuse : https://github.com/libfuse/libfuse/blob/master/example/passthrough.c
@@ -44,7 +44,7 @@
 #include "fstools.h"
 
 
-const char unixSockPath[] = "/tmp/unixsocket";
+const char unixSockPath[] = "/tmp/setrunixsocket";
 
 
 
@@ -70,11 +70,15 @@ void* setrfs_init(struct fuse_conn_info *conn){
 // - st_mode : il contient les permissions du fichier ou dossier (accordez simplement toutes les permissions à tous),
 //				mais aussi le type de fichier. C'est ici que vous devez indiquer à FUSE si le chemin qu'il vous donne
 //				est un dossier ou un fichier.
-// - st_size : de manière générale, vous pouvez renvoyer une valeur par défaut (par exemple 1) dans ce champ. Toutefois,
-//				si le fichier est ouvert et en cours de lecture, vous _devez_ renvoyer la vraie taille du fichier, car
+// - st_size : si le fichier est ouvert et en cours de lecture, vous _devez_ renvoyer la vraie taille du fichier, car
 //				FUSE utilise cette information pour déterminer si la lecture est terminée, _peu importe_ ce que renvoie
-//				votre fonction read() implémentée plus bas...
-//				Utilisez le fichier mis en cache pour obtenir sa taille en octets dans ce dernier cas.
+//				votre fonction read() implémentée plus bas... Utilisez le fichier mis en cache pour obtenir sa taille 
+//				en octets dans ce dernier cas.
+//				Si le fichier n'est _pas_ ouvert, alors vous devez renvoyer une _borne supérieure_ sur sa taille.
+//				Étant donné que le plus gros fichier fait 104857600 octets, vous pouvez renvoyer cette valeur plus un.
+//				Encore une fois, si vous ne le faites pas, FUSE considérera que vous n'avez pas besoin de lire plus
+//				d'octets que la valeur que vous renvoyez...
+//				
 //
 // Cette fonction montre également comment récupérer le _contexte_ du système de fichiers. Vous pouvez utiliser ces
 // lignes dans d'autres fonctions.

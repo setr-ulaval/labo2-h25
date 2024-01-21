@@ -1,3 +1,8 @@
+/* TP2 Hiver 2024 
+ * Code source fourni
+ * Marc-Andre Gardner
+ */
+
 #ifndef FSTOOLS_H
 #define FSTOOLS_H
 
@@ -32,20 +37,21 @@ struct cacheData{
 // ATTENTION : toutes les fonctions suivantes supposent que vous avez _déjà_ l'accès exclusif au cache
 // (en ayant verrouillé son mutex)
 // Vous DEVEZ vous assurer que ces fonctions peuvent s'exécuter sans deadlock ou race condition.
+// Toutes ces fonctions reçoivent la structure de cache comme premier argument
 
 // Reçoit en entrée un nom de fichier et le cache à utiliser. Retourne un pointeur vers la structure
 // contenant l'information sur le fichier en cas, si ce dernier existe. Sinon, retourne NULL.
-struct cacheFichier* trouverFichier(const char *path, struct cacheData *cache);
+struct cacheFichier* trouverFichier(struct cacheData *cache, const char *path);
 
 // Utilise les mêmes arguments que trouverFichierEnCache, mais ajoute en plus un incrément, qui sera
 // ajouté à la variable membre countOpen de la structure. Cet incrément peut être positif ou négatif.
-struct cacheFichier* incrementerCompteurFichier(const char *path, struct cacheData *cache, int increment);
+struct cacheFichier* incrementerCompteurFichier(struct cacheData *cache, const char *path, int increment);
 
 // Insère un nouveau fichier dans le cache
-void insererFichier(struct cacheFichier *infoFichier, struct cacheData *cache);
+void insererFichier(struct cacheData *cache, struct cacheFichier *infoFichier);
 
 // Retire un fichier du cache : attention, cette fonction ne vérifie pas que plus personne n'utilise
 // ce fichier (en vérifiant que countOpen == 0).
-void retirerFichier(struct cacheFichier *infoFichier, struct cacheData *cache);
+void retirerFichier(struct cacheData *cache, struct cacheFichier *infoFichier);
 
 #endif
