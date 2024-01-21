@@ -51,7 +51,7 @@ Les scripts fournis assument que les répertoires suivants existent et qu'ils so
 
 ### 3.3. Récupération du code source
 
-Afin de clarifier certains détails d'implémentation, nous vous fournissons une ébauche de code que vous devez utiliser. Les divers fichiers vous sont fournis dans un [dépôt Git](https://github.com/setr-ulaval/labo2-h23). Clonez ce dépôt sur votre ordinateur de développement et, une fois cet énoncé lu, *prenez le temps d'explorer les divers fichiers, qui contiennent beaucoup de commentaires quant aux tâches précises à effectuer.* Rappel : vous ne devriez *pas* avoir à cloner le dépôt contenant les fichiers sources sur le Raspberry Pi!
+Afin de clarifier certains détails d'implémentation, nous vous fournissons une ébauche de code que vous devez utiliser. Les divers fichiers vous sont fournis dans un [dépôt Git](https://github.com/setr-ulaval/labo2-h24). Clonez ce dépôt sur votre ordinateur de développement et, une fois cet énoncé lu, *prenez le temps d'explorer les divers fichiers, qui contiennent beaucoup de commentaires quant aux tâches précises à effectuer.* Rappel : vous ne devriez *pas* avoir à cloner le dépôt contenant les fichiers sources sur le Raspberry Pi!
 
 > **Note** : comme pour le laboratoire 1, vous **devez** modifier les fichiers `.vscode/launch.json` et `.vscode/tasks.json` pour y écrire l'adresse de votre Raspberry Pi, et ce *dans chacun des sous-dossiers*.
 
@@ -76,7 +76,7 @@ Pour cette première partie, vous devez implémenter un serveur de téléchargem
   * L'identifiant des processus enfant s'occupant de chaque téléchargement.
   * Vous pouvez optionnellement ajouter d'autres informations, telles que le nom du fichier en cours de téléchargement ou le temps écoulé depuis le début du téléchargement, mais ce n'est pas obligatoire.
 
-Votre serveur doit pouvoir gérer au minimum cinq (5) connexions simultanées. Vous retrouverez dans le dossier *serveurCurl* du [dépôt Git du laboratoire](https://github.com/setr-ulaval/labo2-h23) l'architecture de ce programme ainsi que l'implémentation ou l'ébauche de certaines fonctions clés. Chaque fichier contient des commentaires précis sur la tâche que vous devez remplir, prenez le temps de les lire attentivement et de vous faire une vue d'ensemble avant de vous lancer dans la programmation à proprement parler. De manière détaillée, chaque fichier remplit le rôle suivant :
+Votre serveur doit pouvoir gérer au minimum cinq (5) connexions simultanées. Vous retrouverez dans le dossier *serveurCurl* du [dépôt Git du laboratoire](https://github.com/setr-ulaval/labo2-h24) l'architecture de ce programme ainsi que l'implémentation ou l'ébauche de certaines fonctions clés. Chaque fichier contient des commentaires précis sur la tâche que vous devez remplir, prenez le temps de les lire attentivement et de vous faire une vue d'ensemble avant de vous lancer dans la programmation à proprement parler. De manière détaillée, chaque fichier remplit le rôle suivant :
 
 * **servermain.c** : contiennent la fonction *main()* du serveur de fichiers, ainsi que la fonction gérant les signaux. C'est dans la fonction *main* que se trouve la boucle de contrôle qui appelle les autres parties du serveur selon les besoins.
 * **actions.h / actions.c** : déclarent et définissent trois fonctions qui sont utilisées dans la boucle principale du serveur. La première, *verifierNouvelleConnexion*, teste si un nouveau client a tenté de se connecter et, si c'est le cas, l'ajoute à la liste des connexions en cours. La seconde, *traiterConnexions*, détermine si une requête a eu lieu sur une de ces connexions actives. La dernière, *traiterTelechargements*, vérifie si un téléchargement est complété et envoie la réponse au client s'il y a lieu.
@@ -139,48 +139,69 @@ Comme dans le laboratoire 1, les scripts sont configurés de manière à activer
 
 > **Attention** : les avertissements ne sont affichés par GCC que lorsque vous compilez effectivement un fichier. Si vous ne le modifiez pas et relancez la compilation, ces avertissements « disparaîtront » puisque GCC ne tentera même pas de recompiler les fichiers fautifs. Assurez-vous donc de toujours nettoyer (`CMake Clean`) votre environnement de compilation avant de compiler pour retirer les avertissements.
 
+> Note importante : il est possible que certains outils d'analyse de code émettent des avertissements _faux positifs_, à savoir des avertissements qui n'en sont pas vraiment (et que le compilateur, lui, n'émettra pas). Par exemple, vous pourrez probablement observer que les symbols tels que `S_IFMT` sont soulignés en rouge dans VScode (avec un avertissement de type _Identifier X is undefined_). Ceci ne sont **pas** des avertissements qui vous pénaliseront (puisqu'ils sont faux et dus à des limitations dans l'outil d'analyse). Lorsque nous évaluons votre code pour savoir si le _compilateur_ émet des avertissements, nous faisons toujours `CMake Clean` puis `CMake Build` et observons la sortie dans la terminal. Si aucun avertissement (ou erreur!) ne s'affiche, le code est considéré comme conforme sur ce point.
 
-## 8. Modalités d'évaluation
+## 8. Exécutables fournis
 
-Ce travail doit être réalisé **en équipe de deux**, la charge de travail étant à répartir équitablement entre les deux membres de l'équipe. Aucun rapport n'est à remettre, mais vous devez soumettre votre code source dans monPortail avant le **9 février 2023, 17h30**. Ensuite, lors de la séance de laboratoire du **10 février 2022**, les **deux** équipiers doivent être en mesure individuellement d'expliquer leur approche et de démontrer le bon fonctionnement de l'ensemble de la solution de l'équipe du laboratoire. Si vous ne pouvez pas vous y présenter, contactez l'équipe pédagogique du cours dans les plus brefs délais afin de convenir d'une date d'évaluation alternative. Ce travail compte pour **15%** de la note totale du cours.
+Afin de vous permettre de déboguer plus facilement vos programmes, nous vous fournissons les **exécutables binaires (compilés) pour chaque programme** (client et serveur). Ces exécutables constituent la solution du laboratoire et sont présents dans le dossier *executables* du dépôt Git. Vous pouvez donc, par exemple, tester votre programme client en utilisant la solution du programme serveur, et vice-versa. Évidemment, ces binaires ne peuvent être remis pour l'évaluation : vous devez implémenter vos propres programmes!
 
-L'évaluation en personne comprendra les éléments suivants:
+Pour les utiliser, vous pouvez les transférer sur votre Raspberry Pi, puis les lancer indépendamment, dans un terminal, juste avant (ou après) de lancer votre propre programme.
 
-* Une première partie concernant la compilation du projet sous VSCode où vous devrez démontrer que votre code compile sans avertissement ni erreur après avoir effectué un `CMake Clean`.
+> **Attention** : bien que les programmes fournis soient *corrects* (au sens où ils respectent l'énoncé du laboratoire), ils ne sont pas infaillibles et blindés contre toute erreur. Envoyer des données erronées à ces programmes _peut_ conduire à un plantage ou un blocage du programme. Par exemple, dans le cadre de ce laboratoire, si votre serveur envoie un message incorrectement formaté (ex. la taille indiqué dans l'en-tête de votre réponse ne correspond pas réellement à la taille du fichier qui suit), le programme client que nous vous fournissons a de bonnes chances de s'arrêter brutalement ou de bloquer.
 
-* Une seconde partie dans laquelle on ouvrira plusieurs terminaux et où nous vous demanderons d'exécuter plusieurs commandes, dont certaines en parallèle. En prévision de l'évaluation lors de l'atelier, veuillez préparer votre ordinateur en ouvrant 4 terminaux côte à côte connectés à votre Raspberry Pi Zero. Voir la capture d'écran ci-dessous pour l'agencement des terminaux.
 
-<img src="img/terms_video.png" style="width:1000px"/>
+## 9. Modalités d'évaluation
 
-Les terminaux seront numérotés ci-après 1 à 4 respectivement de gauche à droite, ils seront tous connectés en ssh à votre Raspberry Pi:
+Ce travail doit être réalisé **en équipe de deux**, la charge de travail étant à répartir équitablement entre les deux membres de l'équipe. Aucun rapport n'est à remettre, mais vous devez soumettre votre code source dans monPortail avant le **15 février 2024, 17h00**. Ensuite, lors de la séance de laboratoire du **16 février 2024**, les **deux** équipiers doivent être en mesure individuellement d'expliquer leur approche et de démontrer le bon fonctionnement de l'ensemble de la solution à l'équipe du laboratoire. Si vous ne pouvez pas vous y présenter, contactez l'équipe pédagogique du cours dans les plus brefs délais afin de convenir d'une date d'évaluation alternative. Ce travail compte pour **15%** de la note totale du cours.
+
+L'évaluation en personne se fait sur le matériel (Raspberry Pi Zero W) de l'équipe pédagogique (enseignant ou assistant de cours), configuré avec l'image du laboratoire 1. Cette évaluation comprendra les éléments suivants :
+
+1. Compilation de votre code sous l'environnement de développement standard. Vérification de l'absence de messages d'avertissement du compilateur et de la réussite de la compilation.
+
+2. Transfert des binaires serveur et client sur notre Raspberry Pi. Nous y ouvrirons plusieurs termineux afin d'effectuer des commandes similaires à celles suivantes :
+
 * **Terminal 1**: c'est celui qui exécutera le serveur, soit la commande `/home/pi/projects/laboratoire2/tp2serveur`;
-* **Terminal 2**: il exécute et affiche la sortie du daemon, donc `/home/pi/projects/laboratoire2/tp2client -f /home/pi/projects/laboratoire2/pointdemontage`. Mais avant de lancer le daemon, identifiez et notez le PID du serveur à l'aide de la commande `ps ax | grep tp2serveur`, vous l'utiliserez pour envoyer un signal `SIGUSR2` au serveur par la suite;
-* **Terminal 3**: ce terminal et le suivant simuleront deux utilisateurs. Nous y exécuterons les commandes listées ci-après dans l'ordre. **Attention**, deux commandes sont à lancer en simultané (ou plutôt rapidement l'une après l'autre) dans les terminaux 3 et 4, elles sont repérées par la mention **(simultané)**:
+* **Terminal 2**: il exécute et affiche la sortie du daemon, donc `/home/pi/projects/laboratoire2/tp2client -f /home/pi/projects/laboratoire2/pointdemontage`. Avant de lancer le daemon, nous noterons le PID du serveur à l'aide de la commande `ps ax | grep tp2serveur`. Ce PID sera utilisé pour envoyer un signal `SIGUSR2` au serveur par la suite;
+* **Terminal 3**: ce terminal et le suivant simuleront deux utilisateurs. Nous y exécuterons les commandes listées ci-après dans l'ordre. **Attention**, deux commandes seront lancées simultanément (ou plutôt rapidement l'une après l'autre) dans les terminaux 3 et 4:
   * `cd /home/pi/projects/laboratoire2/pointdemontage`;
   * `ls`;
   * `cat fichier.cpp`;
-  * `md5sum file100Mo` **(simultané)**.
-* **Terminal 4**: deuxième utilisateur. **Attention**, deux commandes sont à lancer en simultané (ou plutôt rapidement l'une après l'autre) dans les terminaux 3 et 4, elles sont repérées par la mention **(simultané)**:
+  * `md5sum file100Mo`.
+* **Terminal 4** (simultanément avec le terminal 3):
   * `cd /home/pi/projects/laboratoire2/pointdemontage`;
-  * `md5sum logo.png & kill -s SIGUSR2 PID &` **(simultané)** -> bien montrer la sortie dans le terminal 1;
+  * `md5sum logo.png & kill -s SIGUSR2 PID &`
   * `cat existepas.txt`;
   * `md5sum file1Mo`.
-* Il est possible que nous vous demandions d'exécuter d'autres commandes lors de l'évaluation.
+* Il est possible que nous exécutions d'autres commandes lors de l'évaluation.
 
+### 9.1. Barème d'évaluation
 
 Le barême d'évaluation détaillé sera le suivant (laboratoire noté sur 20 points) :
 
-* (2 pts) Le programme est en mesure de télécharger un fichier sur un serveur distant via la librairie cURL.
-* (5 pts) La communication entre le module serveur (le programme téléchargeant les fichiers) et client (le système de fichiers FUSE) via un socket Unix est fonctionnelle dans les deux sens.
-* (5 pts) Le système de fichiers setrFS est fonctionnel en lecture (en particulier, il est possible de lister les fichiers et d'ouvrir tous les fichiers présents dans le répertoire de test).
+#### 9.1.1. Qualité du code remis (6 points)
+
+* (4 pts) Le code C est valide, complet et ne contient pas d'erreurs empêchant le bon déroulement des programmes.
+* (1 pts) La compilation des deux exécutables ne génère aucun avertissement (*warning*) de la part du compilateur.
+* (1 pts) Les erreurs éventuelles (fichier non existant, module serveur non démarré) sont correctement signalées.
+
+#### 9.1.2. Validité de la solution (10 points)
+
+> **Attention** : un programme ne compilant pas obtient automatiquement une note de **zéro** pour cette section.
+
+* (1 pts) Le programme est en mesure de télécharger un fichier sur un serveur distant via la librairie cURL.
+* (3 pts) La communication entre le module serveur (le programme téléchargeant les fichiers) et client (le système de fichiers FUSE) via un socket Unix est fonctionnelle dans les deux sens.
+* (1 pts) Le système de fichiers setrFS est fonctionnel pour lister les fichiers du répertoires.
+* (2 pts) Le système de fichiers setrFS est fonctionnel en lecture (il est possible d'ouvrir tous les fichiers présents dans le répertoire de test).
 * (2 pts) Le système complet est en mesure de gérer plusieurs fichiers en même temps, tant du côté du module serveur (téléchargement parallèle de plusieurs fichiers) que du côté du module client (plusieurs appels au système de fichiers simultanés).
 * (1 pts) L'envoi d'un signal SIGUSR2 au module serveur écrit correctement les statistiques courantes sur la console.
-* (1 pts) Les erreurs éventuelles (fichier non existant, module serveur non démarré) sont correctement signalées.
-* (2 pts) La compilation des deux exécutables ne génère aucun avertissement (*warning*) de la part du compilateur
-* (2 pts) Les étudiants sont en mesure d'expliquer l'approche utilisée et de répondre aux questions concernant leur code.
+
+#### 9.1.3. Justesse des explications et réponses aux questions (4 points)
+
+* (4 pts) Les étudiants sont en mesure d'expliquer l'approche utilisée et de répondre aux questions concernant leur code et la théorie liée au laboratoire.
 
 
-## 9. Ressources et lectures connexes
+
+## 10. Ressources et lectures connexes
 
 * Les [pages de manuel (man) de Linux](http://man7.org/linux/man-pages/index.html). Ces pages sont également disponibles sur la plupart des ordinateurs utilisant Linux, en tapant la commande `man nom_de_la_commande`.
 * Un [tutoriel détaillé](https://computing.llnl.gov/tutorials/pthreads/) sur les threads POSIX (*pthreads*).
