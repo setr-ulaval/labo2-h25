@@ -1,8 +1,12 @@
 #!/bin/bash
 set -e
 
-# Sync executable
 bn=$(basename $1)
+
+# Ensure the folder exists
+ssh pi@$2 "mkdir -p /home/pi/projects/laboratoire2/"
+
+# Sync executable
 rsync -az $1/build/tp2serveur pi@$2:/home/pi/projects/laboratoire2/tp2serveur
 
 # Execute GDB
