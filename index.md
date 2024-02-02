@@ -28,7 +28,7 @@ Ce serveur possède une interface très simple. Afin de pouvoir réellement mett
 
 Cette manière de découper le problème entre, d'une part, un programme capable d'effectuer des requêtes HTTP pour transférer localement un fichier, mais n'offrant qu'une interface limitée, et, d'autre part, un programme offrant une interface de système de fichiers complète, mais incapable de récupérer un fichier autrement que par une interface simple, confère une grande polyvalence à ce système. Par exemple, si l'on souhaitait plutôt avoir un système de fichiers offrant une couche d'abstraction à un serveur FTP, il suffit de remplacer le *daemon* de téléchargement, l'implémentation du *daemon* offrant le système de fichiers à proprement parler restant exactement la même.
 
-> **Attention** : ne confondez pas le serveur de téléchargement (que vous implémentez) et le serveur HTTP (accessible sur le [site web du département](http://wcours.gel.ulaval.ca/GIF3004/labo2/)). Dans l'ordre, le serveur HTTP contient des fichiers; _votre_ serveur de téléchargement le contactera pour obtenir les fichiers, qu'il transmettra par la suite au _client_ FUSE, qui gérera les accès bas niveau au système de fichier.
+> **Attention** : ne confondez pas le serveur de téléchargement (que vous implémentez) et le serveur HTTP (accessible sur le [site web du département](http://wcours.gel.ulaval.ca/GIF3004/labo2/index.txt) par exemple). Dans l'ordre, le serveur HTTP contient des fichiers; _votre_ serveur de téléchargement le contactera pour obtenir les fichiers, qu'il transmettra par la suite au _client_ FUSE, qui gérera les accès bas niveau au système de fichier.
 
 
 ## 3. Préparation et outils nécessaires
@@ -104,7 +104,7 @@ Notez que tous ces traitements s'effectuent de manière intrinsèquement parall�
 
 ## 6. Outils
 
-Afin de vous permettre de tester votre code, un serveur HTTP a été mis en place à l'adresse *http://wcours.gel.ulaval.ca/GIF3004/labo2/*. Cette URL pointe vers un dossier contenant plusieurs fichiers de diverses tailles allant de 1 Ko à 100 Mo. La liste des fichiers est donnés dans le fichier *[index.txt](http://wcours.gel.ulaval.ca/GIF3004/labo2/index.txt)*.
+Afin de vous permettre de tester votre code, un serveur HTTP a été mis en place à l'adresse *http://wcours.gel.ulaval.ca/GIF3004/labo2/*. Cette URL pointe vers un dossier contenant plusieurs fichiers de diverses tailles allant de 1 Ko à 100 Mo. La liste des fichiers est donnés dans le fichier *[index.txt](http://wcours.gel.ulaval.ca/GIF3004/labo2/index.txt)*. *Notez que vous n'avez pas accès à l'URL du dossier, vous devez spécifiquement demander un fichier.*
 
 Le fichier *[md5sums.txt](http://wcours.gel.ulaval.ca/GIF3004/labo2/md5sums.txt)* contient quant à lui la somme MD5 de chaque fichier du répertoire (sauf lui-même), pour faciliter la validation. Par exemple, si vous voulez vérifier que votre programme est en mesure de télécharger sans erreur le fichier *[file1Mo](http://wcours.gel.ulaval.ca/GIF3004/labo2/file1Mo)*, utilisez simplement la commande `md5sum file1Mo`. Le résultat devrait être le même que celui contenu dans le fichier *[md5sums.txt](http://wcours.gel.ulaval.ca/GIF3004/labo2/md5sums.txt)*; si ce n'est pas le cas, c'est qu'il y a une erreur dans votre programme et que vous n'êtes pas en mesure de restituer le fichier dans son intégrité.
 
