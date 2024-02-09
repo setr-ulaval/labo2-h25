@@ -15,6 +15,9 @@ int verifierNouvelleConnexion(struct requete reqList[], int maxlen, int socket){
     // la nouvelle entrée de reqList pour y sauvegarder le descripteur de fichier correspondant
     // à cette nouvelle connexion, et changer son statut à REQ_STATUS_LISTEN
     // Voyez man accept(2) pour plus de détails sur cette fonction
+    // Note importante : vous devez vous assurer que accept() ne produise pas d'erreur, mais 
+    // faites attention, certaines erreurs peuvent parfois être normales dans le contexte de
+    // votre programme!
     //
     // Cette fonction doit retourner 0 si elle n'a pas acceptée de nouvelle connexion, ou 1 dans le cas contraire.
 
