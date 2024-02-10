@@ -4,14 +4,14 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceRoot}",
-                "${env.HOME}/arm-cross-comp-env/arm-raspbian-linux-gnueabihf/arm-raspbian-linux-gnueabihf/sysroot/usr/include",
-                "${env.HOME}/arm-cross-comp-env/arm-raspbian-linux-gnueabihf/arm-raspbian-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/",
-                "${env.HOME}/arm-cross-comp-env/arm-raspbian-linux-gnueabihf/arm-raspbian-linux-gnueabihf/sysroot/usr/lib/gcc/arm-linux-gnueabihf/6/include/"
+                "${env.HOME}/arm-cross-comp-env/arm-raspbian-linux-gnueabi/arm-raspbian-linux-gnueabi/sysroot/usr/include",
+                "${env.HOME}/arm-cross-comp-env/arm-raspbian-linux-gnueabi/arm-raspbian-linux-gnueabi/sysroot/usr/include/arm-linux-gnueabihf/",
+                "${env.HOME}/arm-cross-comp-env/arm-raspbian-linux-gnueabi/arm-raspbian-linux-gnueabi/sysroot/usr/lib/gcc/arm-linux-gnueabihf/6/include/"
             ],
             "defines": [
                 "__ARM_PCS_VFP"
             ],
-            "intelliSenseMode": "clang-x64",
+            "intelliSenseMode": "linux-gcc-arm",
             "browse": {
                 "path": [
                     "${workspaceRoot}"
@@ -19,9 +19,10 @@
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
             },
-            "compilerPath": "/usr/bin/clang",
-            "cStandard": "c18",
-            "cppStandard": "c++17"
+            "compilerPath": "${env.HOME}/arm-cross-comp-env/arm-raspbian-linux-gnueabi/bin/arm-raspbian-linux-gnueabi-gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++17",
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4
