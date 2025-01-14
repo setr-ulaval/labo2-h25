@@ -53,7 +53,7 @@ Les scripts fournis assument que les répertoires suivants existent et qu'ils so
 
 ### 3.3. Récupération du code source
 
-Afin de clarifier certains détails d'implémentation, nous vous fournissons une ébauche de code que vous devez utiliser. Les divers fichiers vous sont fournis dans un [dépôt Git](https://github.com/setr-ulaval/labo2-h24). Clonez ce dépôt sur votre ordinateur de développement et, une fois cet énoncé lu, *prenez le temps d'explorer les divers fichiers, qui contiennent beaucoup de commentaires quant aux tâches précises à effectuer.* Rappel : vous ne devriez *pas* avoir à cloner le dépôt contenant les fichiers sources sur le Raspberry Pi!
+Afin de clarifier certains détails d'implémentation, nous vous fournissons une ébauche de code que vous devez utiliser. Les divers fichiers vous sont fournis dans un [dépôt Git](https://github.com/setr-ulaval/labo2-h25). Clonez ce dépôt sur votre ordinateur de développement et, une fois cet énoncé lu, *prenez le temps d'explorer les divers fichiers, qui contiennent beaucoup de commentaires quant aux tâches précises à effectuer.* Rappel : vous ne devriez *pas* avoir à cloner le dépôt contenant les fichiers sources sur le Raspberry Pi!
 
 > **Note** : comme pour le laboratoire 1, vous **devez** modifier les fichiers `.vscode/launch.json` et `.vscode/tasks.json` pour y écrire l'adresse de votre Raspberry Pi, et ce *dans chacun des sous-dossiers*.
 
@@ -78,7 +78,7 @@ Pour cette première partie, vous devez implémenter un serveur de téléchargem
   * L'identifiant des processus enfant s'occupant de chaque téléchargement.
   * Vous pouvez optionnellement ajouter d'autres informations, telles que le nom du fichier en cours de téléchargement ou le temps écoulé depuis le début du téléchargement, mais ce n'est pas obligatoire.
 
-Votre serveur doit pouvoir gérer au minimum cinq (5) connexions simultanées. Vous retrouverez dans le dossier *serveurCurl* du [dépôt Git du laboratoire](https://github.com/setr-ulaval/labo2-h24) l'architecture de ce programme ainsi que l'implémentation ou l'ébauche de certaines fonctions clés. Chaque fichier contient des commentaires précis sur la tâche que vous devez remplir, prenez le temps de les lire attentivement et de vous faire une vue d'ensemble avant de vous lancer dans la programmation à proprement parler. De manière détaillée, chaque fichier remplit le rôle suivant :
+Votre serveur doit pouvoir gérer au minimum cinq (5) connexions simultanées. Vous retrouverez dans le dossier *serveurCurl* du [dépôt Git du laboratoire](https://github.com/setr-ulaval/labo2-h25) l'architecture de ce programme ainsi que l'implémentation ou l'ébauche de certaines fonctions clés. Chaque fichier contient des commentaires précis sur la tâche que vous devez remplir, prenez le temps de les lire attentivement et de vous faire une vue d'ensemble avant de vous lancer dans la programmation à proprement parler. De manière détaillée, chaque fichier remplit le rôle suivant :
 
 * **servermain.c** : contiennent la fonction *main()* du serveur de fichiers, ainsi que la fonction gérant les signaux. C'est dans la fonction *main* que se trouve la boucle de contrôle qui appelle les autres parties du serveur selon les besoins.
 * **actions.h / actions.c** : déclarent et définissent trois fonctions qui sont utilisées dans la boucle principale du serveur. La première, *verifierNouvelleConnexion*, teste si un nouveau client a tenté de se connecter et, si c'est le cas, l'ajoute à la liste des connexions en cours. La seconde, *traiterConnexions*, détermine si une requête a eu lieu sur une de ces connexions actives. La dernière, *traiterTelechargements*, vérifie si un téléchargement est complété et envoie la réponse au client s'il y a lieu.
@@ -149,14 +149,14 @@ Comme dans le laboratoire 1, les scripts sont configurés de manière à activer
 
 Afin de vous permettre de déboguer plus facilement vos programmes, nous vous fournissons les **exécutables binaires (compilés) pour chaque programme** (client et serveur). Ces exécutables constituent la solution du laboratoire et sont présents dans le dossier *executables* du dépôt Git. Vous pouvez donc, par exemple, tester votre programme client en utilisant la solution du programme serveur, et vice-versa. Évidemment, ces binaires ne peuvent être remis pour l'évaluation : vous devez implémenter vos propres programmes!
 
-Pour les utiliser, vous pouvez les transférer sur votre Raspberry Pi, puis les lancer indépendamment, dans un terminal, juste avant (ou après) avoir lancé votre propre programme. `./setrh2024-tp2-serveurCurl` suffit pour le serveur, le client doit quant à lui être lancé avec le chemin vers le point de montage, par exemple `./setrh2024-tp2-daemonFuse -f -s /home/pi/projects/laboratoire2/pointdemontage`. Retirez le `-f` si vous voulez utiliser le mode multi-threads, par contre dans ce cas le programme ne vous affichera pas d'information de débogage dans le terminal.
+Pour les utiliser, vous pouvez les transférer sur votre Raspberry Pi, puis les lancer indépendamment, dans un terminal, juste avant (ou après) avoir lancé votre propre programme. `./setrh2025-tp2-serveurCurl` suffit pour le serveur, le client doit quant à lui être lancé avec le chemin vers le point de montage, par exemple `./setrh2025-tp2-daemonFuse -f -s /home/pi/projects/laboratoire2/pointdemontage`. Retirez le `-f` si vous voulez utiliser le mode multi-threads, par contre dans ce cas le programme ne vous affichera pas d'information de débogage dans le terminal.
 
 > **Attention** : bien que les programmes fournis soient *corrects* (au sens où ils respectent l'énoncé du laboratoire), ils ne sont pas infaillibles et blindés contre toute requête incorrecte. Envoyer des données erronées à ces programmes _peut_ conduire à un plantage ou un blocage du programme. Par exemple, dans le cadre de ce laboratoire, si votre serveur envoie un message incorrectement formaté (ex. la taille indiqué dans l'en-tête de votre réponse ne correspond pas réellement à la taille du fichier qui suit), le programme client que nous vous fournissons a de bonnes chances de s'arrêter brutalement ou de bloquer. De même, si une requête ne contient aucun status valide, le comportement du serveur sera imprévisible.
 
 
 ## 9. Modalités d'évaluation
 
-Ce travail doit être réalisé **en équipe de deux**, la charge de travail étant à répartir équitablement entre les deux membres de l'équipe. Aucun rapport n'est à remettre, mais vous devez soumettre votre code source dans monPortail avant le **15 février 2024, 17h00**. Ensuite, lors de la séance de laboratoire du **16 février 2024**, les **deux** équipiers doivent être en mesure individuellement d'expliquer leur approche et de démontrer le bon fonctionnement de l'ensemble de la solution à l'équipe du laboratoire. Si vous ne pouvez pas vous y présenter, contactez l'équipe pédagogique du cours dans les plus brefs délais afin de convenir d'une date d'évaluation alternative. Ce travail compte pour **15%** de la note totale du cours.
+Ce travail doit être réalisé **en équipe de deux**, la charge de travail étant à répartir équitablement entre les deux membres de l'équipe. Aucun rapport n'est à remettre, mais vous devez soumettre votre code source dans monPortail avant le **13 février 2025, 17h00**. Ensuite, lors de la séance de laboratoire du **14 février 2025**, les **deux** équipiers doivent être en mesure individuellement d'expliquer leur approche et de démontrer le bon fonctionnement de l'ensemble de la solution à l'équipe du laboratoire. Si vous ne pouvez pas vous y présenter, contactez l'équipe pédagogique du cours dans les plus brefs délais afin de convenir d'une date d'évaluation alternative. Ce travail compte pour **15%** de la note totale du cours.
 
 L'évaluation en personne se fait sur le matériel (Raspberry Pi Zero W) de l'équipe pédagogique (enseignant ou assistant de cours), configuré avec l'image du laboratoire 1. Cette évaluation comprendra les éléments suivants :
 
@@ -188,7 +188,7 @@ Le barême d'évaluation détaillé sera le suivant (laboratoire noté sur 20 po
 * (1 pts) La compilation des deux exécutables ne génère aucun avertissement (*warning*) de la part du compilateur.
 * (1 pts) Les erreurs éventuelles (fichier non existant, module serveur non démarré) sont correctement signalées.
 
-#### 9.1.2. Validité de la solution (10 points)
+#### 9.1.2. Validité de la solution (9 points)
 
 > **Attention** : un programme ne compilant pas obtient automatiquement une note de **zéro** pour cette section.
 
@@ -199,9 +199,9 @@ Le barême d'évaluation détaillé sera le suivant (laboratoire noté sur 20 po
 * (2 pts) Le système complet est en mesure de gérer plusieurs fichiers en même temps, tant du côté du module serveur (téléchargement parallèle de plusieurs fichiers) que du côté du module client (plusieurs appels au système de fichiers simultanés).
 * (1 pts) L'envoi d'un signal SIGUSR2 au module serveur écrit correctement les statistiques courantes sur la console.
 
-#### 9.1.3. Justesse des explications et réponses aux questions (4 points)
+#### 9.1.3. Justesse des explications et réponses aux questions (5 points)
 
-* (4 pts) Les étudiants sont en mesure d'expliquer l'approche utilisée et de répondre aux questions concernant leur code et la théorie liée au laboratoire.
+* (5 pts) Les étudiants sont en mesure d'expliquer l'approche utilisée et de répondre aux questions concernant leur code et la théorie liée au laboratoire.
 
 
 
