@@ -43,23 +43,23 @@ int traiterConnexions(struct requete reqList[], int maxlen){
     struct timeval tInfo;
     tInfo.tv_sec = 0;
     tInfo.tv_usec = SLEEP_TIME;
-    int maxSocketFileDescriptor = 0;
+    int maxFileDescriptorPlusOne = 0;
     FD_ZERO(&setSockets);
 
-    for(int i = 0; i < maxlen; i++){
+    for(int i = 0; i < maxlen; ++i){
         if(reqList[i].status == REQ_STATUS_LISTEN){
             FD_SET(reqList[i].fdSocket, &setSockets);
-            maxSocketFileDescriptor = (maxSocketFileDescriptor < reqList[i].fdSocket) ? reqList[i].fdSocket : maxSocketFileDescriptor;
+            maxFileDescriptorPlusOne = (maxFileDescriptorPlusOne < reqList[i].fdSocket+1) ? reqList[i].fdSocket+1 : maxFileDescriptorPlusOne;
         }
     }
 
-    if(maxSocketFileDescriptor){
+    if(maxFileDescriptorPlusOne){
         // Au moins un socket est en attente d'une requête
-        // select attend comme premier argument le descripteur de fichier a la valeur maximale plus 1
-        int s = select(maxSocketFileDescriptor+1, &setSockets, NULL, NULL, &tInfo);
+        // select attend comme premier argument le descripteur de fichier ayant la valeur maximale plus 1
+        int s = select(maxFileDescriptorPlusOne, &setSockets, NULL, NULL, &tInfo);
         if(s > 0){
             // Au moins un socket est prêt à être lu
-            for(int i = 0; i < maxlen; i++){
+            for(int i = 0; i < maxlen; ++i){
                 if(reqList[i].status == REQ_STATUS_LISTEN && FD_ISSET(reqList[i].fdSocket, &setSockets)){
                     struct msgReq req;
                     char* buffer = malloc(sizeof(req));
@@ -103,7 +103,7 @@ int traiterConnexions(struct requete reqList[], int maxlen){
         }
     }
 
-    return nfdsSockets;
+    return maxFileDescriptorPlusOne;
 }
 
 
