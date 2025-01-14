@@ -40,21 +40,23 @@ int traiterConnexions(struct requete reqList[], int maxlen){
     // On parcourt la liste des connexions en cours
     // On utilise select() pour determiner si des descripteurs de fichier sont disponibles
     fd_set setSockets;
-    struct timeval tvS;
-    tvS.tv_sec = 0; tvS.tv_usec = SLEEP_TIME;
-    int nfdsSockets = 0;
+    struct timeval tInfo;
+    tInfo.tv_sec = 0;
+    tInfo.tv_usec = SLEEP_TIME;
+    int maxSocketFileDescriptor = 0;
     FD_ZERO(&setSockets);
 
     for(int i = 0; i < maxlen; i++){
         if(reqList[i].status == REQ_STATUS_LISTEN){
             FD_SET(reqList[i].fdSocket, &setSockets);
-            nfdsSockets = (nfdsSockets <= reqList[i].fdSocket) ? reqList[i].fdSocket+1 : nfdsSockets;
+            maxSocketFileDescriptor = (maxSocketFileDescriptor < reqList[i].fdSocket) ? reqList[i].fdSocket : maxSocketFileDescriptor;
         }
     }
 
-    if(nfdsSockets > 0){
+    if(maxSocketFileDescriptor){
         // Au moins un socket est en attente d'une requête
-        int s = select(nfdsSockets, &setSockets, NULL, NULL, &tvS);
+        // select attend comme premier argument le descripteur de fichier a la valeur maximale plus 1
+        int s = select(maxSocketFileDescriptor+1, &setSockets, NULL, NULL, &tInfo);
         if(s > 0){
             // Au moins un socket est prêt à être lu
             for(int i = 0; i < maxlen; i++){
